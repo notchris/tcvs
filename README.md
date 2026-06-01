@@ -1,5 +1,32 @@
-# Vue 3 + TypeScript + Vite
+# Twitch Chat Voice Synthesis
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A simple TTS solution for Twitch using the [Speech Synthesis API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis). 
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+[Official page](https://notchris.net/tcvs) 
+
+- Use any voices available to your OS
+- Filter messages by user
+- Truncate long messages
+- Skip reading emojis / URLs
+- Toggle reading username before message
+- Set random voices per-user
+- Change Rate / Pitch / Volume
+
+
+
+## Installation
+
+```bash
+yarn install
+```
+
+## Usage
+
+```bash
+yarn dev
+```
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
