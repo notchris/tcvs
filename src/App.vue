@@ -299,6 +299,11 @@ function speakMessage(
   });
 }
 
+interface HasRange {
+  start: number;
+  end: number;
+}
+
 export default defineComponent({
   name: "App",
   data() {
@@ -420,15 +425,15 @@ export default defineComponent({
      *
      * Ranges are inclusive in both start and end:
      *
-     *   removeMultipleRanges("abcdefghijklmnop", [[1, 2], [4, 8]]);
+     *   removeMultipleRanges("abcdefghijklmnop", [{start: 1, end: 2}, {start: 4, end: 8}]);
      *   // -> "adjklmnop"
      *
      * (Inclusive because Twitch API emoji ranges are inclusive)
      */
-    removeMultipleRanges(str: string, ranges: [number, number][]) {
-      ranges.sort((a, b) => b[0] - a[0]);
+    removeMultipleRanges(str: string, ranges: HasRange[]) {
+      ranges.sort((a, b) => b.start - a.start);
       for (let i = 0; i < ranges.length; i++) {
-        let [start, end] = ranges[i];
+        let {start, end} = ranges[i];
         if (!(start >= 0 && end < str.length && start < end)) {
           continue;
         }
@@ -450,17 +455,9 @@ export default defineComponent({
             const user = message.username.toLowerCase();
             let msg = message.message || "";
 
-            const ranges: [number, number][] = [];
-
             const tags = message.tags as EmoteTag;
 
-            if (tags.emotes?.length) {
-              tags.emotes.forEach((emote) => {
-                ranges.push([emote.start, emote.end]);
-              });
-            }
-
-            msg = this.removeMultipleRanges(msg, ranges);
+            msg = this.removeMultipleRanges(msg, tags.emotes || []);
             msg = msg.replace(URL_REGEX, "").trim();
 
             if (!msg.length) return;
