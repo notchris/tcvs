@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "tailwindcss";
+@import "tailwindcss/utilities";
+@plugin "@tailwindcss/forms";
+
+/* custom base styles */
+@layer base {
+  html, body, #app {
+    font-family: "Inter", sans-serif;
+  }
+}
+
+@custom-variant dark (&:is(.dark *));
+
+
+html, body, #app {
+  width: 100%;
+  height: 100%;
+}
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+}
+
+.v3ti .v3ti-tag {
+  background: #DDD;
+  /*border: 1px solid #222222;*/
+}
+
+.v3ti .v3ti-tag .v3ti-remove-tag {
+  color: #000000;
+  transition: color .3s;
+}
+
+.v3ti .v3ti-tag .v3ti-remove-tag:hover {
+  color: #ffffff;
+}
+
+@font-face {
+    font-family: 'GothamRoundedBold';
+    src: url('fonts/Gotham-Rounded-Bold.ttf');
+}
+
+.font-gotham {
+    font-family: 'GothamRoundedBold';
+}
+
+a, button, input[type="submit"], select {
+  cursor: pointer;
+}
