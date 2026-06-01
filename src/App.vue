@@ -415,13 +415,24 @@ export default defineComponent({
       }
     },
 
-    removeMultipleRanges(str: string, ranges: number[][]) {
+    /**
+     * Removes multiple non-overlapping ranges from a string.
+     *
+     * Ranges are inclusive in both start and end:
+     *
+     *   removeMultipleRanges("abcdefghijklmnop", [[1, 2], [4, 8]]);
+     *   // -> "adjklmnop"
+     *
+     * (Inclusive because Twitch API emoji ranges are inclusive)
+     */
+    removeMultipleRanges(str: string, ranges: [number, number][]) {
       ranges.sort((a, b) => b[0] - a[0]);
       for (let i = 0; i < ranges.length; i++) {
         let [start, end] = ranges[i];
-        if (start >= 0 && end <= str.length && start < end) {
-          str = str.slice(0, start) + str.slice(end);
+        if (!(start >= 0 && end < str.length && start < end)) {
+          continue;
         }
+        str = str.slice(0, start) + str.slice(end+1);
       }
 
       return str;
@@ -439,7 +450,7 @@ export default defineComponent({
             const user = message.username.toLowerCase();
             let msg = message.message || "";
 
-            const ranges: number[][] = [];
+            const ranges: [number, number][] = [];
 
             const tags = message.tags as EmoteTag;
 
